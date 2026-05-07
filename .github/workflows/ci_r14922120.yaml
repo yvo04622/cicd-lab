@@ -1,0 +1,35 @@
+name: CI Pipeline
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 下載 repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 安裝 Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 安裝 dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # TypeScript type check
+      - name: TypeScript Type Check
+        run: npm run typecheck
+
+      # Prettier check
+      - name: Prettier Check
+        run: npm run format:check
+
+      # Run tests
+      - name: Run Tests
+        run: npm test
